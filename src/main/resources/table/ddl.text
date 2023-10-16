@@ -1,0 +1,25 @@
+--------------------------------------------------------
+--  DDL for Table TB_COMPANY
+--------------------------------------------------------
+
+  CREATE TABLE "TB_COMPANY"
+   (	"COMPANY_ID" NUMBER(10,0),
+	"NATION" VARCHAR2(20 BYTE),
+	"REGION" VARCHAR2(20 BYTE),
+	"COMPANY_NUMBER" VARCHAR2(30 BYTE),
+	"REGDATE" DATE DEFAULT SYSDATE
+   ) ;
+--------------------------------------------------------
+--  DDL for Index PK_COMPANY_ID
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "PK_COMPANY_ID" ON "TB_COMPANY" ("COMPANY_ID")
+  ;
+--------------------------------------------------------
+--  Constraints for Table TB_COMPANY
+--------------------------------------------------------
+
+  ALTER TABLE "TB_COMPANY" ADD CONSTRAINT "PK_COMPANY_ID" PRIMARY KEY ("COMPANY_ID") ENABLE;
+  ALTER TABLE "TB_COMPANY" MODIFY ("COMPANY_NUMBER" NOT NULL ENABLE);
+  ALTER TABLE "TB_COMPANY" MODIFY ("REGION" NOT NULL ENABLE);
+  ALTER TABLE "TB_COMPANY" MODIFY ("NATION" NOT NULL ENABLE);
