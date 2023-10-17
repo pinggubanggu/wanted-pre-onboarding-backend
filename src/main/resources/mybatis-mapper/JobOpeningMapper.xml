@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.hire.persistence.mapper.JobOpeningMapper">
+  <insert id="register" parameterType="com.example.hire.domain.jobOpening.JobOpening">
+    INSERT INTO TB_JOB_OPENING
+    (
+        JOB_OPENING_ID,
+        JOB_POSITION,
+     <if test="jobReward !='' and jobReward != null">
+       JOB_REWARD,
+     </if>
+        JOB_CONTENT,
+        JOB_SKILL,
+        REG_DATE,
+        COMPANY_ID
+    )
+    VALUES
+    (
+      SEQ_JOB_OPENING.NEXTVAL,
+      #{jobPosition},
+    <if test="jobReward !='' and jobReward != null">
+      #{jobReward},
+    </if>
+      -- 0을 넣으면 이것을 통과하지 않았던가? 확인(-), 근데 0들어가도 될 것 같은데 이것은,
+      -- 우선 if에 걸리는지 확인해보자
+      #{jobContent},
+      #{jobSkill},
+      SYSDATE,
+      #{companyId}
+    )
+  </insert>
+
+  <update id="modify">
+    UPDATE TB_JOB_OPENING
+    SET
+    (
+      <if test="jobPosition !='' and jobPosition != null">
+         JOB_POSITION,
+      </if>
+      <if test="jobReward !='' and jobReward != null">
+        JOB_REWARD,
+      </if>
+      <if test="jobContent !='' and jobContent != null">
+        JOB_CONTENT,
+      </if>
+      <if test="jobSkill !='' and jobSkill != null">
+        JOB_SKILL
+      </if>
+    )
+    WHERE JOB_OPENING_ID = #{jobOpeningId}
+  </update>
+
+  <select id="findById" resultType="com.example.hire.domain.jobOpening.JobOpening">
+    SELECT *
+    FROM TB_JOB_OPENING
+    WHERE
+    JOB_OPENING_ID = #{jobOpeningId}
+  </select>
+
+</mapper>

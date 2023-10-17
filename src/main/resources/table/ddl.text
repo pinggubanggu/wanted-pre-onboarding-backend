@@ -1,13 +1,22 @@
+
+--------------------------------------------------------
+--  DDL for SEQUENCE
+--------------------------------------------------------
+
+CREATE SEQUENCE SEQ_COMPANY;
+CREATE SEQUENCE SEQ_JOB_OPENING;
+
 --------------------------------------------------------
 --  DDL for Table TB_COMPANY
 --------------------------------------------------------
 
   CREATE TABLE "TB_COMPANY"
    (	"COMPANY_ID" NUMBER(10,0),
-	"NATION" VARCHAR2(20 BYTE),
-	"REGION" VARCHAR2(20 BYTE),
-	"COMPANY_NUMBER" VARCHAR2(30 BYTE),
-	"REGDATE" DATE DEFAULT SYSDATE
+      "COMPANY_NAME" VARCHAR2(50 BYTE),
+      "NATION" VARCHAR2(20 BYTE),
+      "REGION" VARCHAR2(20 BYTE),
+      "COMPANY_NUMBER" VARCHAR2(30 BYTE),
+      "REGDATE" DATE DEFAULT SYSDATE
    ) ;
 --------------------------------------------------------
 --  DDL for Index PK_COMPANY_ID
@@ -21,5 +30,97 @@
 
   ALTER TABLE "TB_COMPANY" ADD CONSTRAINT "PK_COMPANY_ID" PRIMARY KEY ("COMPANY_ID") ENABLE;
   ALTER TABLE "TB_COMPANY" MODIFY ("COMPANY_NUMBER" NOT NULL ENABLE);
+  ALTER TABLE "TB_COMPANY" MODIFY ("COMPANY_NAME" NOT NULL ENABLE);
   ALTER TABLE "TB_COMPANY" MODIFY ("REGION" NOT NULL ENABLE);
   ALTER TABLE "TB_COMPANY" MODIFY ("NATION" NOT NULL ENABLE);
+
+--------------------------------------------------------
+--  DDL for Table TB_APPLICANT
+--------------------------------------------------------
+  CREATE TABLE TB_APPLICANT (
+      USER_ID VARCHAR2(25) NOT NULL,
+      USER_NAME VARCHAR2(30) NOT NULL
+  );
+
+--------------------------------------------------------
+--  Constraints for Table TB_APPLICANT
+--------------------------------------------------------
+
+  ALTER TABLE TB_APPLICANT ADD CONSTRAINT PK_USER_ID
+  PRIMARY KEY (USER_ID);
+
+--------------------------------------------------------
+--  DDL for Table TB_JOB_OPENING
+--------------------------------------------------------
+
+  CREATE TABLE TB_JOB_OPENING (
+      JOB_OPENING_ID VARCHAR2(25) NOT NULL,
+      JOB_POSITION VARCHAR2(25) NOT NULL,
+      JOB_REWARD NUMBER(20,0),
+      JOB_CONTENT VARCHAR2(3000) NOT NULL,
+      JOB_SKILL VARCHAR2(1000) NOT NULL,
+      COMPANY_ID NUMBER(10,0) NOT NULL
+  );
+
+--------------------------------------------------------
+--  Constraints for Table TB_JOB_OPENING
+--------------------------------------------------------
+
+  ALTER TABLE TB_JOB_OPENING ADD CONSTRAINT PK_JOB_OPENING_ID
+  PRIMARY KEY (JOB_OPENING_ID);
+
+  ALTER TABLE TB_JOB_OPENING ADD CONSTRAINT
+  FK_COMPANY_ID FOREIGN KEY(COMPANY_ID) REFERENCES TB_COMPANY(COMPANY_ID);
+
+--------------------------------------------------------
+--  DDL for Table TB_APPLY_HISTORY
+--------------------------------------------------------
+  CREATE TABLE TB_APPLY_HISTORY (
+      USER_ID VARCHAR2(25) NOT NULL,
+      JOB_OPENING_ID VARCHAR2(25) NOT NULL,
+      APPLY_DATE DATE NOT NULL
+  );
+
+--------------------------------------------------------
+--  Constraints for Table TB_APPLY_HISTORY
+--------------------------------------------------------
+
+  ALTER TABLE TB_APPLY_HISTORY ADD CONSTRAINT PK_APPLY_HISTORY
+  PRIMARY KEY (USER_ID, JOB_OPENING_ID);
+
+  ALTER TABLE TB_APPLY_HISTORY ADD CONSTRAINT
+  FK_APPLY_USER_ID FOREIGN KEY(USER_ID) REFERENCES TB_APPLICANT(USER_ID);
+
+  ALTER TABLE TB_APPLY_HISTORY ADD CONSTRAINT
+  FK_APPLY_JOB_OPENING_ID FOREIGN KEY(JOB_OPENING_ID) REFERENCES TB_JOB_OPENING(JOB_OPENING_ID);
+
+--------------------------------------------------------
+--  회사와 사용자를 DB에 임시로 넣고 진행
+--------------------------------------------------------
+
+-- 회사
+INSERT INTO TB_COMPANY
+(COMPANY_ID,
+    NATION,
+    REGION,
+    COMPANY_PHONE_NUMBER,
+    REG_DATE,
+    COMPANY_NAME)
+VALUES
+(SEQ_COMPANY.NEXTVAL,
+ '한국',
+ '서울',
+ '010-2222-3333',
+ SYSDATE,
+ 'DK_COMPANY');
+
+-- 사용자
+INSERT INTO TB_APPLICANT
+( USER_ID,
+  USER_NAME
+)
+VALUES
+( 'duddns6393',
+  'pinggu'
+);
+

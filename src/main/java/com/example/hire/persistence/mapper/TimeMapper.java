@@ -1,4 +1,4 @@
-package com.example.hire.mapper;
+package com.example.hire.persistence.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;

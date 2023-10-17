@@ -1,6 +1,6 @@
-package com.example.hire.persistance;
+package com.example.hire.persistence;
 
-import com.example.hire.mapper.TimeMapper;
+import com.example.hire.persistence.mapper.TimeMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
