@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.hire.persistence.mapper.ApplicantMapper">
+  <insert id="apply">
+    INSERT INTO TB_APPLY_HISTORY
+    (
+     USER_ID,
+     JOB_OPENING_ID,
+     APPLY_DATE
+     )
+    VALUES
+    (
+     #{userId},
+     #{jobOpeningId},
+     SYSDATE
+     )
+  </insert>
+
+</mapper>

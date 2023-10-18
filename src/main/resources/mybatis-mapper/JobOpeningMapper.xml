@@ -55,11 +55,12 @@
     AND COMPANY_ID = #{companyId}
   </update>
 
-  <select id="read" resultType="com.example.hire.domain.jobOpening.JobOpening">
-    SELECT *
-    FROM TB_JOB_OPENING
-    WHERE
-    JOB_OPENING_ID = #{jobOpeningId}
+  <select id="read" resultType="com.example.hire.dto.HireListDto">
+    SELECT JOB.*, COM.*
+    FROM TB_JOB_OPENING JOB
+    INNER JOIN TB_COMPANY COM
+    ON JOB.COMPANY_ID = COM.COMPANY_ID
+    WHERE JOB_OPENING_ID = #{jobOpeningId}
   </select>
 
   <delete id="delete" parameterType="com.example.hire.domain.jobOpening.JobOpening">
@@ -68,9 +69,18 @@
     AND COMPANY_ID = #{companyId}
   </delete>
 
-  <select id="getList" resultType="com.example.hire.domain.jobOpening.JobOpening">
-    SELECT *
-    FROM TB_JOB_OPENING
+  <select id="getList" resultType="com.example.hire.dto.HireListDto">
+    SELECT
+           JOB.JOB_OPENING_ID,
+           JOB.JOB_POSITION,
+           JOB.JOB_REWARD,
+           JOB.JOB_SKILL,
+           COM.COMPANY_NAME,
+           COM.NATION,
+           COM.REGION
+    FROM TB_JOB_OPENING JOB
+    INNER JOIN TB_COMPANY COM
+    ON JOB.COMPANY_ID = COM.COMPANY_ID
   </select>
 
 </mapper>

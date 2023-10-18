@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.hire.persistence.mapper.CompanyMapper">
+
+  <select id="get" resultType="com.example.hire.domain.company">
+    SELECT *
+    FROM TB_COMPANY
+    WHERE COMPANY_ID = #{companyId}
+  </select>
+
+  <select id="getJobOpeningIdOfCompany" resultType="int">
+    SELECT JOB_OPENING_ID
+    FROM TB_JOB_OPENING
+    WHERE COMPANY_ID = #{companyId}
+  </select>
+</mapper>

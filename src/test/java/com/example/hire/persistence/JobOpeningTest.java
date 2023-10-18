@@ -2,6 +2,7 @@ package com.example.hire.persistence;
 
 import com.example.hire.domain.company.Company;
 import com.example.hire.domain.jobOpening.JobOpening;
+import com.example.hire.dto.HireListDto;
 import com.example.hire.persistence.mapper.JobOpeningMapper;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,7 +38,7 @@ public class JobOpeningTest {
     // when
     jobOpeningMapper.insert(job);
 
-    // then, 등록된 채용공고id를 알고 싶은데...  어떻게 알지?
+    // then
     log.info(String.valueOf(job.getJobOpeningId()));
     //Assertions.assertEquals(jobOpeningMapper.read(job.getJobOpeningId(), job.getCompanyId()),  );
 
@@ -60,12 +61,12 @@ public class JobOpeningTest {
     jobOpeningMapper.update(job);
 
     //then
-    JobOpening jobOpening = jobOpeningMapper.read(23, 1);
-    Assertions.assertEquals("Java", jobOpening.getJobSkill());
+    HireListDto hireListDto = jobOpeningMapper.read(23, 1);
+    Assertions.assertEquals("Java", hireListDto.getJobSkill());
   }
 
   @Test
-  public void deleteTest() { // 왜 안되징...
+  public void deleteTest() {
 
     // given
     JobOpening job = new JobOpening();
@@ -85,7 +86,7 @@ public class JobOpeningTest {
     // given
 
     // when
-    List<JobOpening> list = jobOpeningMapper.getList();
+    List<HireListDto> list = jobOpeningMapper.getList();
 
     // then
 
