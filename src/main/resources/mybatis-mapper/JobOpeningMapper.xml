@@ -4,7 +4,12 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.hire.persistence.mapper.JobOpeningMapper">
-  <insert id="register" parameterType="com.example.hire.domain.jobOpening.JobOpening">
+  <insert id="insert" parameterType="com.example.hire.domain.jobOpening.JobOpening">
+
+    <selectKey keyProperty="jobOpeningId" resultType="int" order="AFTER">
+        SELECT SEQ_JOB_OPENING.CURRVAL FROM DUAL
+    </selectKey>
+
     INSERT INTO TB_JOB_OPENING
     (
         JOB_OPENING_ID,
@@ -24,40 +29,48 @@
     <if test="jobReward !='' and jobReward != null">
       #{jobReward},
     </if>
-      -- 0을 넣으면 이것을 통과하지 않았던가? 확인(-), 근데 0들어가도 될 것 같은데 이것은,
-      -- 우선 if에 걸리는지 확인해보자
       #{jobContent},
       #{jobSkill},
-      SYSDATE,
+      #{regDate},
       #{companyId}
     )
   </insert>
 
-  <update id="modify">
+  <update id="update">
     UPDATE TB_JOB_OPENING
     SET
-    (
       <if test="jobPosition !='' and jobPosition != null">
-         JOB_POSITION,
+         JOB_POSITION = #{jobPosition},
       </if>
       <if test="jobReward !='' and jobReward != null">
-        JOB_REWARD,
+        JOB_REWARD = #{jobReward},
       </if>
       <if test="jobContent !='' and jobContent != null">
-        JOB_CONTENT,
+        JOB_CONTENT = #{jobContent},
       </if>
       <if test="jobSkill !='' and jobSkill != null">
-        JOB_SKILL
+        JOB_SKILL = #{jobSkill}
       </if>
-    )
     WHERE JOB_OPENING_ID = #{jobOpeningId}
+    AND COMPANY_ID = #{companyId}
   </update>
 
-  <select id="findById" resultType="com.example.hire.domain.jobOpening.JobOpening">
+  <select id="read" resultType="com.example.hire.domain.jobOpening.JobOpening">
     SELECT *
     FROM TB_JOB_OPENING
     WHERE
     JOB_OPENING_ID = #{jobOpeningId}
+  </select>
+
+  <delete id="delete" parameterType="com.example.hire.domain.jobOpening.JobOpening">
+    DELETE FROM TB_JOB_OPENING
+    WHERE JOB_OPENING_ID = #{jobOpeningId}
+    AND COMPANY_ID = #{companyId}
+  </delete>
+
+  <select id="getList" resultType="com.example.hire.domain.jobOpening.JobOpening">
+    SELECT *
+    FROM TB_JOB_OPENING
   </select>
 
 </mapper>

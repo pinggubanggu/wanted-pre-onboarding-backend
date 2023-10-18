@@ -24,6 +24,8 @@ public class JobOpening {
 
   private int companyId;
 
+  private Date updateDate;
+
   public JobOpening(int jobOpeningId, String jobPosition, String jobContent,
     String jobSkill, Date regDate, int companyId) {
     this.jobOpeningId = jobOpeningId;
