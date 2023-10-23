@@ -70,14 +70,14 @@ public class JobOpeningTest {
 
     // given
     JobOpening job = new JobOpening();
-    job.setJobOpeningId(22);
+    job.setJobOpeningId(23);
     job.setCompanyId(1);
 
     // when
     jobOpeningMapper.delete(job.getJobOpeningId(), job.getCompanyId());
 
     // then
-    Assertions.assertNull(jobOpeningMapper.read(22,1));
+    Assertions.assertNull(jobOpeningMapper.read(23,1));
   }
 
   @Test

@@ -4,6 +4,7 @@ import com.example.hire.domain.jobOpening.JobOpening;
 import com.example.hire.dto.HireListDto;
 import com.example.hire.service.HireService;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,11 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/hire/*")
 public class HireController {
 
-  private final HireService service;
-
-  public HireController(HireService service) {
-    this.service = service;
-  }
+  @Autowired
+  private HireService service;
 
   @PostMapping("/register")
   public void register(JobOpening jobOpening) {
